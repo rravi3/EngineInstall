@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acura RDX Engine Installation Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            position: relative;
+            transition: opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .step-content {
+            background: white;
+            border-radius: 0;
+            padding: 20px;
+            width: 100%;
+            height: 100vh;
+            box-shadow: none;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            flex-shrink: 0;
+        }
+
+        .step-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            line-height: 1;
+        }
+
+        .step-title {
+            font-size: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .step-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            white-space: pre-line;
+        }
+
+        .images-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .step-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 0;
+            box-shadow: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .step-image:hover {
+            opacity: 0.95;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 20px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-button:hover {
+            background: #5568d3;
+            transform: scale(1.1);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .step-counter {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            transition: width 0.3s ease;
+        }
+
+
+        @media (max-width: 768px) {
+            .step-content {
+                padding: 15px;
+            }
+
+            .step-number {
+                font-size: 36px;
+            }
+
+            .step-title {
+                font-size: 16px;
+            }
+
+            .step-text {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            .step-header {
+                margin-bottom: 8px;
+                padding-bottom: 8px;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container" id="container">
+        <div class="step-content fade-in" id="stepContent">
+            <div class="step-header">
+                <div>
+                    <div class="step-number" id="stepNumber">1</div>
+                    <div class="step-title">Step <span id="stepTitle">1</span></div>
+                </div>
+            </div>
+            <div class="step-text" id="stepText"></div>
+            <div class="images-container" id="imagesContainer"></div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevButton" onclick="previousStep()">←</button>
+        <div class="step-counter">
+            <span id="currentStep">1</span> / <span id="totalSteps">65</span>
+        </div>
+        <button class="nav-button" id="nextButton" onclick="nextStep()">→</button>
+    </div>
+
+    <script>
+        let stepsData = [
+        {
+                "step": "Chapter 35 - 1",
+                "text": "\u2022 Preinstallation checklist ensures all accessories are correctly reinstalled\n\u2022 Battery must be fully charged before engine installation\n\u2022 Prelube engine and verify proper oil pressure",
+                "page": 1,
+                "images": [
+                        "images/chapter35/page_1_img_1.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - 2",
+                "text": "\u2022 Bell housing must be properly torqued to prevent cylinder distortion\n\u2022 Clutch friction disc requires alignment tool during installation\n\u2022 Torque converter splines must engage all transmission shafts",
+                "page": 2,
+                "images": [
+                        "images/chapter35/page_2_img_1.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - 3",
+                "text": "\u2022 Engine secured with sling attached to manifold or lifting brackets\n\u2022 Rear-wheel drive: engine tipped to allow transmission entry first\n\u2022 Front-wheel drive: often installed from underneath on cradle",
+                "page": 3,
+                "images": [
+                        "images/chapter35/page_3_img_1.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - 4",
+                "text": "\u2022 Engine should start on fully charged battery without jumper\n\u2022 Maintain fast idle (above 1,500 RPM) for first 10 minutes\n\u2022 Check valve train, vacuum (17-21 inHg), and charging system",
+                "page": 4,
+                "images": []
+        },
+        {
+                "step": "Chapter 35 - 5",
+                "text": "\u2022 Never add cold water to cooling system while engine running\n\u2022 Never lug engine - avoid low speed in high gear\n\u2022 Change oil and filter at 500 miles or 20 hours of operation",
+                "page": 5,
+                "images": [
+                        "images/chapter35/page_5_img_1.jpeg"
+                ]
+        },
+        {
+                "step": 1,
+                "text": "Install the accessory brackets and tighten their bolts to the specified torques.",
+                "page": 1,
+                "images": [
+                        "images/page_1_img_1.png"
+                ]
+        },
+        {
+                "step": 2,
+                "text": "Raise the vehicle on the lift, and position the engine/transmission assembly under the vehicle. Lower the vehicle, and attach the universal eyelet and chain hoist to the engine, then lift the engine into position in the vehicle. NOTE: Reinstall the mounting bolts/support nuts in the sequence given in the following steps. Failure to follow this sequence may cause excessive noise and vibration, and reduce engine mount life.",
+                "page": 1,
+                "images": [
+                        "images/page_1_img_2.png"
+                ]
+        },
+        {
+                "step": 3,
+                "text": "Attach the engine support eyelet with the support bolt.",
+                "page": 2,
+                "images": [
+                        "images/page_2_img_1.png"
+                ]
+        },
+        {
+                "step": 4,
+                "text": "Place the engine support mount pads over the hood edge cushions (A), and align the pins with the clip hole (B). Remove the lids from both sides of the cowl cover. Install the engine support hanger (AAR-T -12566), then attach the hook to the engine support eyelet. Tighten the wing nut (C) by hand to lift and support the engine/transmission assembly.",
+                "page": 2,
+                "images": [
+                        "images/page_2_img_2.png"
+                ]
+        },
+        {
+                "step": 5,
+                "text": "Loosen the upper torque rod mounting bolt (A).",
+                "page": 3,
+                "images": [
+                        "images/page_3_img_1.png"
+                ]
+        },
+        {
+                "step": 6,
+                "text": "Tighten the new side engine mount bracket mounting bolt and nut.",
+                "page": 3,
+                "images": [
+                        "images/page_3_img_2.png"
+                ]
+        },
+        {
+                "step": 7,
+                "text": "Remove the chain hoist.",
+                "page": 3,
+                "images": [
+                        "images/page_3_img_3.png"
+                ]
+        },
+        {
+                "step": 8,
+                "text": "Remove the universal eyelet from the drive belt auto-tensioner.",
+                "page": 4,
+                "images": [
+                        "images/page_4_img_1.png"
+                ]
+        },
+        {
+                "step": 9,
+                "text": "Remove the transmission hanger bracket (P/N-21232-RC T-A00).",
+                "page": 4,
+                "images": [
+                        "images/page_4_img_2.png"
+                ]
+        },
+        {
+                "step": 10,
+                "text": "Install the transmission mount, then tighten the transmission mount stiffener mounting bolts (A) and the new transmission mount mounting bolts (B).",
+                "page": 5,
+                "images": [
+                        "images/page_5_img_1.png"
+                ]
+        },
+        {
+                "step": 11,
+                "text": "Tighten the new bolt and nuts (C).",
+                "page": 5,
+                "images": [
+                        "images/page_5_img_2.png"
+                ]
+        },
+        {
+                "step": 12,
+                "text": "Install the harness clamps (D).",
+                "page": 5,
+                "images": [
+                        "images/page_5_img_3.png"
+                ]
+        },
+        {
+                "step": 13,
+                "text": "Raise the vehicle on the lift to full height.",
+                "page": 5,
+                "images": [
+                        "images/page_5_img_1.png"
+                ]
+        },
+        {
+                "step": 14,
+                "text": "Using the subframe adapter (A) and a jack, raise the subframe up to body.",
+                "page": 5,
+                "images": [
+                        "images/page_5_img_2.png"
+                ]
+        },
+        {
+                "step": 15,
+                "text": "Loosely install the new 14 x 1.5 mm bolts (A), and loosely install the 12 x 1.25 mm bolts (B).",
+                "page": 6,
+                "images": [
+                        "images/page_6_img_1.png"
+                ]
+        },
+        {
+                "step": 16,
+                "text": "Align all reference marks (A) on the front subframe (B) with the body, then tighten the bolts on the front subframe to the specified torque.",
+                "page": 6,
+                "images": [
+                        "images/page_6_img_2.png"
+                ]
+        },
+        {
+                "step": 17,
+                "text": "Remove the jack and front subframe adapter.",
+                "page": 6,
+                "images": [
+                        "images/page_6_img_3.png"
+                ]
+        },
+        {
+                "step": 18,
+                "text": "Install the lower torque rod, then tighten the new lower torque rod mounting bolts in the numbered sequence shown.",
+                "page": 7,
+                "images": [
+                        "images/page_7_img_1.png"
+                ]
+        },
+        {
+                "step": 19,
+                "text": "Lower the vehicle on the lift.",
+                "page": 7,
+                "images": [
+                        "images/page_7_img_2.png"
+                ]
+        },
+        {
+                "step": 20,
+                "text": "Remove the special tools from the engine and vehicle, then install the top corner clip to the front grille on both sides.",
+                "page": 7,
+                "images": [
+                        "images/page_7_img_3.png"
+                ]
+        },
+        {
+                "step": 21,
+                "text": "Tighten the upper torque rod mounting bolt.",
+                "page": 7,
+                "images": [
+                        "images/page_7_img_1.png"
+                ]
+        },
+        {
+                "step": 22,
+                "text": "Raise the vehicle on the lift to full height.",
+                "page": 7,
+                "images": [
+                        "images/page_7_img_2.png"
+                ]
+        },
+        {
+                "step": 23,
+                "text": "Install the bolts securing the steering gearbox mounting brackets.",
+                "page": 8,
+                "images": [
+                        "images/page_8_img_1.png"
+                ]
+        },
+        {
+                "step": 24,
+                "text": "Install the power steering (P/S) fluid line bracket (A), and secure the hose with the hose clamps (B).",
+                "page": 8,
+                "images": [
+                        "images/page_8_img_2.png"
+                ]
+        },
+        {
+                "step": 25,
+                "text": "Install the propeller shaft to the transfer shaft flange.",
+                "page": 8,
+                "images": [
+                        "images/page_8_img_3.png"
+                ]
+        },
+        {
+                "step": 26,
+                "text": "Install a new set ring on the end of each driveshaft, then install the driveshafts. Make sure each ring \"clicks\" into place in the differential and intermediate shaft.",
+                "page": 8,
+                "images": [
+                        "images/page_8_img_1.png"
+                ]
+        },
+        {
+                "step": 27,
+                "text": "Connect the lower arms to the knuckles.",
+                "page": 8,
+                "images": [
+                        "images/page_8_img_2.png"
+                ]
+        },
+        {
+                "step": 28,
+                "text": "Connect the stabilizer links.",
+                "page": 8,
+                "images": [
+                        "images/page_8_img_3.png"
+                ]
+        },
+        {
+                "step": 29,
+                "text": "Install the three-way catalytic converter (TWC) (A). Use new gaskets (B) and new self-locking nuts (C).",
+                "page": 9,
+                "images": [
+                        "images/page_9_img_1.png"
+                ]
+        },
+        {
+                "step": 30,
+                "text": "Install the splash shield.",
+                "page": 9,
+                "images": [
+                        "images/page_9_img_2.png"
+                ]
+        },
+        {
+                "step": 31,
+                "text": "Install the front wheels.",
+                "page": 9,
+                "images": [
+                        "images/page_9_img_3.png"
+                ]
+        },
+        {
+                "step": 32,
+                "text": "Lower the vehicle on the lift.",
+                "page": 9,
+                "images": [
+                        "images/page_9_img_1.png"
+                ]
+        },
+        {
+                "step": 33,
+                "text": "Install the automatic transmission fluid (ATF) cooler hoses (A), and secure the hoses with the clips (B).",
+                "page": 10,
+                "images": [
+                        "images/page_10_img_1.png"
+                ]
+        },
+        {
+                "step": 34,
+                "text": "Install the ground cable (C).",
+                "page": 10,
+                "images": [
+                        "images/page_10_img_2.png"
+                ]
+        },
+        {
+                "step": 35,
+                "text": "Install the heater hoses.",
+                "page": 10,
+                "images": [
+                        "images/page_10_img_3.png"
+                ]
+        },
+        {
+                "step": 36,
+                "text": "Install the A/C compressor (A), then connect the A/C compressor clutch connector (B).",
+                "page": 11,
+                "images": [
+                        "images/page_11_img_1.png"
+                ]
+        },
+        {
+                "step": 37,
+                "text": "Install the radiator.",
+                "page": 11,
+                "images": [
+                        "images/page_11_img_2.png"
+                ]
+        },
+        {
+                "step": 38,
+                "text": "Install the P/S pump (A), then install the P/S hose to the clamp (B).",
+                "page": 11,
+                "images": [
+                        "images/page_11_img_3.png"
+                ]
+        },
+        {
+                "step": 39,
+                "text": "Install the drive belt.",
+                "page": 11,
+                "images": [
+                        "images/page_11_img_1.png"
+                ]
+        },
+        {
+                "step": 40,
+                "text": "Install the shift cable.",
+                "page": 11,
+                "images": [
+                        "images/page_11_img_2.png"
+                ]
+        },
+        {
+                "step": 41,
+                "text": "Install the evaporative emission (EVAP) canister hose (A), brake booster vacuum hose (B), and vacuum hose (C).",
+                "page": 11,
+                "images": [
+                        "images/page_11_img_3.png"
+                ]
+        },
+        {
+                "step": 42,
+                "text": "Install heater hose clamp bracket (A), then install the heater hoses to the clamps (B).",
+                "page": 12,
+                "images": [
+                        "images/page_12_img_1.png"
+                ]
+        },
+        {
+                "step": 43,
+                "text": "Connect the fuel feed hose, then install the quick-connect fitting cover (A).",
+                "page": 12,
+                "images": [
+                        "images/page_12_img_2.png"
+                ]
+        },
+        {
+                "step": 44,
+                "text": "Install the under-hood fuse relay box to the bracket.",
+                "page": 12,
+                "images": [
+                        "images/page_12_img_3.png"
+                ]
+        },
+        {
+                "step": 45,
+                "text": "Connect the powertrain control module (PCM) connectors (A) and engine wire harness connector (B).",
+                "page": 13,
+                "images": [
+                        "images/page_13_img_1.png"
+                ]
+        },
+        {
+                "step": 46,
+                "text": "Install the harness clamps (C).",
+                "page": 13,
+                "images": [
+                        "images/page_13_img_2.png"
+                ]
+        },
+        {
+                "step": 47,
+                "text": "Install the battery cables (A) to the under-hood fuse/relay box.",
+                "page": 13,
+                "images": [
+                        "images/page_13_img_3.png"
+                ]
+        },
+        {
+                "step": 48,
+                "text": "Connect the harness connector (B).",
+                "page": 13,
+                "images": [
+                        "images/page_13_img_1.png"
+                ]
+        },
+        {
+                "step": 49,
+                "text": "Install the air bypass outlet pipe (A).",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 50,
+                "text": "Install the charge air cooler cover front bracket (A), then install the charge air cooler cover (B).",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 51,
+                "text": "Install the battery base (A), then install the harness clamps (B) and relay block (C).",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 52,
+                "text": "Install the air cleaner housing assembly.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 53,
+                "text": "Install the battery. Clean the battery posts and cable terminals, then assemble them, and apply grease to prevent corrosion.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 54,
+                "text": "Move the shift lever to each gear, and verify that the A/T gear position indicator follows the transmission range switch.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 55,
+                "text": "Inspect for fuel leaks: Turn the ignition switch ON (II) (do not operate the starter) so the fuel pump runs for about 2 seconds and pressurizes the fuel line. Repeat this operation two or three times, then check for fuel leakage at any point in the fuel line.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 56,
+                "text": "Refill the engine with engine oil.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 57,
+                "text": "Refill the transmission with ATF.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 58,
+                "text": "Refill the radiator with engine coolant, and bleed air from the cooling system with the heater valve open.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 59,
+                "text": "Do the PCM reset procedure.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 60,
+                "text": "Do the crankshaft position (CKP) pattern clear/CKP pattern learn procedure.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 61,
+                "text": "Inspect the idle speed.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 62,
+                "text": "Inspect the ignition timing.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 63,
+                "text": "Check the wheel alignment.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        },
+        {
+                "step": 64,
+                "text": "Enter the anti-theft code for the audio system and the navigation system (if equipped), then enter the audio presets.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_2.png"
+                ]
+        },
+        {
+                "step": 65,
+                "text": "Set the clock.",
+                "page": 14,
+                "images": [
+                        "images/page_14_img_1.png"
+                ]
+        }
+        ];
+        
+        // Initialize
+        displayStep(0);
+        updateNavigation();
+
+        function displayStep(index) {
+            if (index < 0 || index >= stepsData.length) return;
+            
+            currentStepIndex = index;
+            const step = stepsData[index];
+            
+            document.getElementById('stepNumber').textContent = step.step;
+            document.getElementById('stepTitle').textContent = step.step;
+            document.getElementById('stepText').textContent = step.text;
+            document.getElementById('currentStep').textContent = step.step;
+            
+            // Display images
+            const imagesContainer = document.getElementById('imagesContainer');
+            imagesContainer.innerHTML = '';
+            
+            if (step.images && step.images.length > 0) {
+                step.images.forEach(imagePath => {
+                    const img = document.createElement('img');
+                    img.src = imagePath;
+                    img.alt = `Step ${step.step} illustration`;
+                    img.className = 'step-image';
+                    img.onerror = function() {
+                        this.style.display = 'none';
+                    };
+                    imagesContainer.appendChild(img);
+                });
+            }
+            
+            // Update progress bar
+            const progress = ((index + 1) / stepsData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Add fade-in animation
+            const content = document.getElementById('stepContent');
+            content.classList.remove('fade-in');
+            setTimeout(() => content.classList.add('fade-in'), 10);
+            
+            updateNavigation();
+        }
+
+        function updateNavigation() {
+            document.getElementById('prevButton').disabled = currentStepIndex === 0;
+            document.getElementById('nextButton').disabled = currentStepIndex === stepsData.length - 1;
+            document.getElementById('totalSteps').textContent = stepsData.length;
+        }
+
+        function nextStep() {
+            if (currentStepIndex < stepsData.length - 1) {
+                displayStep(currentStepIndex + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStepIndex > 0) {
+                displayStep(currentStepIndex - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                nextStep();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                previousStep();
+            }
+        });
+
+        // Data is already initialized above
+    </script>
+</body>
+</html>
+

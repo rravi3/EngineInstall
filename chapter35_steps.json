@@ -1,0 +1,40 @@
+[
+  {
+    "step": "Chapter 35 - 1",
+    "text": "\u2022 Preinstallation checklist ensures all accessories are correctly reinstalled\n\u2022 Battery must be fully charged before engine installation\n\u2022 Prelube engine and verify proper oil pressure",
+    "page": 1,
+    "images": [
+      "images/chapter35/page_1_img_1.jpeg"
+    ]
+  },
+  {
+    "step": "Chapter 35 - 2",
+    "text": "\u2022 Bell housing must be properly torqued to prevent cylinder distortion\n\u2022 Clutch friction disc requires alignment tool during installation\n\u2022 Torque converter splines must engage all transmission shafts",
+    "page": 2,
+    "images": [
+      "images/chapter35/page_2_img_1.jpeg"
+    ]
+  },
+  {
+    "step": "Chapter 35 - 3",
+    "text": "\u2022 Engine secured with sling attached to manifold or lifting brackets\n\u2022 Rear-wheel drive: engine tipped to allow transmission entry first\n\u2022 Front-wheel drive: often installed from underneath on cradle",
+    "page": 3,
+    "images": [
+      "images/chapter35/page_3_img_1.jpeg"
+    ]
+  },
+  {
+    "step": "Chapter 35 - 4",
+    "text": "\u2022 Engine should start on fully charged battery without jumper\n\u2022 Maintain fast idle (above 1,500 RPM) for first 10 minutes\n\u2022 Check valve train, vacuum (17-21 inHg), and charging system",
+    "page": 4,
+    "images": []
+  },
+  {
+    "step": "Chapter 35 - 5",
+    "text": "\u2022 Never add cold water to cooling system while engine running\n\u2022 Never lug engine - avoid low speed in high gear\n\u2022 Change oil and filter at 500 miles or 20 hours of operation",
+    "page": 5,
+    "images": [
+      "images/chapter35/page_5_img_1.jpeg"
+    ]
+  }
+]
