@@ -77,16 +77,20 @@
 
         .images-container {
             flex: 1;
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow: auto;
             min-height: 0;
+            padding: 20px;
         }
 
         .step-image {
             width: 100%;
             height: 100%;
+            max-height: 70vh;
             object-fit: contain;
             border-radius: 0;
             box-shadow: none;
@@ -222,7 +226,7 @@
     <script>
         let stepsData = [
         {
-                "step": "Chapter 35 - 1",
+                "step": "Chapter 35 - Preinstallation",
                 "text": "\u2022 Preinstallation checklist ensures all accessories are correctly reinstalled\n\u2022 Battery must be fully charged before engine installation\n\u2022 Prelube engine and verify proper oil pressure",
                 "page": 1,
                 "images": [
@@ -230,29 +234,87 @@
                 ]
         },
         {
-                "step": "Chapter 35 - 2",
-                "text": "\u2022 Bell housing must be properly torqued to prevent cylinder distortion\n\u2022 Clutch friction disc requires alignment tool during installation\n\u2022 Torque converter splines must engage all transmission shafts",
+                "step": "Chapter 35 - Transmission Manual",
+                "text": "\u2022 Bell housing must be properly torqued to prevent cylinder distortion\n\u2022 Clutch friction disc requires alignment tool during installation\n\u2022 Always adjust clutch free play before starting engine",
                 "page": 2,
                 "images": [
-                        "images/chapter35/page_2_img_1.jpeg"
+                        "images/chapter35/page_2_img_1.jpeg",
+                        "images/chapter35/page_2_img_2.jpeg"
                 ]
         },
         {
-                "step": "Chapter 35 - 3",
-                "text": "\u2022 Engine secured with sling attached to manifold or lifting brackets\n\u2022 Rear-wheel drive: engine tipped to allow transmission entry first\n\u2022 Front-wheel drive: often installed from underneath on cradle",
+                "step": "Chapter 35 - Transmission Automatic",
+                "text": "\u2022 Torque converter splines must engage all transmission shafts\n\u2022 Install torque converter on transmission before mounting to engine\n\u2022 Rotate converter to ensure no binding before securing",
+                "page": 2,
+                "images": [
+                        "images/chapter35/page_2_img_1.jpeg",
+                        "images/chapter35/page_2_img_2.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - Engine Securing",
+                "text": "\u2022 Engine secured with sling attached to manifold or lifting brackets\n\u2022 Ensure engine is supported and balanced properly before installation",
                 "page": 3,
                 "images": [
-                        "images/chapter35/page_3_img_1.jpeg"
+                        "images/chapter35/page_3_img_1.jpeg",
+                        "images/chapter35/page_3_img_2.jpeg"
                 ]
         },
         {
-                "step": "Chapter 35 - 4",
-                "text": "\u2022 Engine should start on fully charged battery without jumper\n\u2022 Maintain fast idle (above 1,500 RPM) for first 10 minutes\n\u2022 Check valve train, vacuum (17-21 inHg), and charging system",
+                "step": "Chapter 35 - Installation RWD",
+                "text": "\u2022 Rear-wheel drive: engine tipped to allow transmission entry first\n\u2022 Transmission worked under floor pan as engine is lowered\n\u2022 Front and rear engine mounts aligned and torqued",
+                "page": 3,
+                "images": [
+                        "images/chapter35/page_3_img_1.jpeg",
+                        "images/chapter35/page_3_img_2.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - Installation FWD",
+                "text": "\u2022 Front-wheel drive: often installed from underneath on cradle\n\u2022 Entire drivetrain package placed back while attached to cradle\n\u2022 Vehicle positioned on hoist and lowered onto engine assembly",
+                "page": 3,
+                "images": [
+                        "images/chapter35/page_3_img_1.jpeg",
+                        "images/chapter35/page_3_img_2.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - Dressing Engine",
+                "text": "\u2022 Dressing the engine involves attaching all auxiliary items: starter motor, fuel rail, oxygen sensors, wiring harness, ignition components, and belt-driven accessories",
+                "page": 3,
+                "images": [
+                        "images/chapter35/page_3_img_1.jpeg",
+                        "images/chapter35/page_3_img_2.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - Engine Start",
+                "text": "\u2022 Engine should start on fully charged battery without jumper\n\u2022 As soon as engine starts and shows oil pressure, bring to fast idle speed\n\u2022 Maintain fast idle to ensure proper lubrication",
                 "page": 4,
                 "images": []
         },
         {
-                "step": "Chapter 35 - 5",
+                "step": "Chapter 35 - Initial Checks",
+                "text": "\u2022 Check valve train quiet operation\n\u2022 Record engine vacuum (17-21 inHg at sea level)\n\u2022 Check for gasoline, coolant, or oil leaks",
+                "page": 4,
+                "images": []
+        },
+        {
+                "step": "Chapter 35 - Break-In Procedure",
+                "text": "\u2022 Accelerate full throttle from 30-50 mph, then close throttle to return to 30 mph\n\u2022 Repeat 10-12 times to seat piston rings\n\u2022 Good ring seating indicated by dry coating in tailpipe",
+                "page": 4,
+                "images": []
+        },
+        {
+                "step": "Chapter 35 - Operating Temperature",
+                "text": "\u2022 Normal operating temperature reached when upper radiator hose is hot and pressurized\n\u2022 Electric cooling fan should cycle on and off at least once\n\u2022 Some manufacturers require two cycles",
+                "page": 5,
+                "images": [
+                        "images/chapter35/page_5_img_1.jpeg"
+                ]
+        },
+        {
+                "step": "Chapter 35 - Break-In Precautions",
                 "text": "\u2022 Never add cold water to cooling system while engine running\n\u2022 Never lug engine - avoid low speed in high gear\n\u2022 Change oil and filter at 500 miles or 20 hours of operation",
                 "page": 5,
                 "images": [
