@@ -207,7 +207,7 @@
             <div class="step-header">
                 <div>
                     <div class="step-number" id="stepNumber">1</div>
-                    <div class="step-title">Step <span id="stepTitle">1</span></div>
+                    <div class="step-title" id="stepTitle">Step 1</div>
                 </div>
             </div>
             <div class="step-text" id="stepText"></div>
@@ -853,8 +853,19 @@
             currentStepIndex = index;
             const step = stepsData[index];
             
-            document.getElementById('stepNumber').textContent = step.step;
-            document.getElementById('stepTitle').textContent = step.step;
+            // Handle step display - check if it's a Chapter 35 slide or regular step
+            const isChapter35 = typeof step.step === 'string' && step.step.startsWith('Chapter 35');
+            
+            if (isChapter35) {
+                // For Chapter 35 slides, show the full title
+                document.getElementById('stepNumber').textContent = '';
+                document.getElementById('stepTitle').textContent = step.step;
+            } else {
+                // For regular steps, show "Step X"
+                document.getElementById('stepNumber').textContent = step.step;
+                document.getElementById('stepTitle').textContent = `Step ${step.step}`;
+            }
+            
             document.getElementById('stepText').textContent = step.text;
             document.getElementById('currentStep').textContent = step.step;
             
